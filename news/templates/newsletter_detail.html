@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}
+    Newsletters - {{ shop.title }}
+{% endblock %}
+{% block header %} <h1>{{ page_title }}</h1>{% endblock header %}
+{% block content %}
+    <p>
+        {{ newsletter.title }}
+    </p>
+     <p>
+        {{ newsletter.content }}
+    </p>
+
+    <p>
+        Created at: {{ newsletter.date }}
+    </p>
+
+    {% if newsletter.writer %}
+    <p>
+        Writer: {{newsletter.writer.username}}
+    </p>
+    {% endif %}
+    
+    {% if newsletter.publisher %}
+    <p>
+        Publisher: {{newsletter.publisher.name}}
+    </p>
+    {% endif %}
+
+    {% if request.user.profile.role|lower == "journalist" and newsletter.writer == request.user or request.user.profile.role|lower == "editor" %}
+        <button>
+            <a href="{% url 'newsletter_update' pk=newsletter.id %}">Update newsletters</a>
+        </button>
+
+        <button>
+            <a href="{% url 'newsletter_delete' pk=newsletter.id %}">Delete newsletter</a>
+        </button>
+    {% endif %}
+    {% if request.user.profile.role|lower == "editor" and not newsletter.is_approved %}
+    <button>
+        <a href="{% url 'approve_newsletter' pk=newsletter.id %}">Approve</a>
+    </button>
+    {% endif %}
+    
+    {% if request.user.profile.role|lower == "reader" %}
+        {% if newsletter.publisher and newsletter.publisher not in request.user.profile.subscribed_publishers.all %}
+        <button>
+            <a href="{% url 'sub_to_publisher' pk=newsletter.publisher.id %}">Subscribe To Publisher</a>
+        </button>
+        {% endif %} 
+        {% if newsletter.writer not in request.user.profile.subscribed_journalists.all %}
+        <button>
+            <a href="{% url 'sub_to_journalist' pk=newsletter.writer.id %}">Subscribe To Journalist</a>
+        </button>
+        {% endif %} 
+    
+    {% endif %}
+    <button>
+        <a href="{% url 'newsletter_list' %}">Back to Newsletters List</a>
+    </button>
+    {% endblock %}

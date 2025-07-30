@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %} News- {{ article.name }}{% endblock %}
+{% block content %}
+    {% block header %}
+        <h1>{{ page_title }}</h1>
+    {% endblock header %}
+    <h2>Article details</h2>
+        <h4>{{ article.title }} {% if article.is_approved  %}- verified {% endif %} </h4>
+        <p>{{ article.content }}</p>
+    {% if request.user.profile.role|lower == "journalist" and article.journalist == request.user or request.user.profile.role|lower == "editor" %}
+        <button>
+            <a href="{% url 'article_update' pk=article.pk %}">Update article</a>
+        </button>
+        <button>
+            <a href="{% url 'article_delete' pk=article.pk %}">Delete article</a>
+        </button>
+    {% endif %}
+    {% if request.user.profile.role|lower == "editor" and not article.is_approved  %}
+        <button>
+            <a href="{% url 'approve_article' pk=article.id %}">Approve</a>
+        </button>
+    {% endif %}
+    {% if request.user.profile.role|lower == "reader" %}
+        {% if article.publisher and article.publisher not in request.user.profile.subscribed_publishers.all %}
+        <button>
+            <a href="{% url 'sub_to_publisher' pk=article.publisher.id %}">Subscribe To Publisher</a>
+        </button>
+        {% endif %} 
+         {% if article.journalist not in request.user.profile.subscribed_journalists.all %}
+         <button>
+            <a href="{% url 'sub_to_journalist' pk=article.journalist.id %}">Subscribe To Journalist</a>
+        </button>
+        {% endif %} 
+       
+
+    {% endif %}
+{% endblock content %}

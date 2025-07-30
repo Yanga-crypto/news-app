@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}
+    Newsletters- {{ page_title }}
+{% endblock %}
+{% block header %} <h1>{{ page_title }}</h1>{% endblock header %}
+{% block content %}
+    <ul>
+        {% if request.user.profile.role|lower == "journalist" %}
+            <button>
+                <a href="{% url 'newsletter_create' %}">Add a newsletter</a>
+            </button>
+        {% endif %}
+        {% for newsletter in newsletters %}
+            <li>
+                <a href="{% url 'newsletter_detail' pk=newsletter.pk %}">{{ newsletter.title }} - {% if newsletter.is_approved %}approved{% else %}unapproved{% endif %}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

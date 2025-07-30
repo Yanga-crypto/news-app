@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+    News - {{ publisher.name }}
+{% endblock %}
+{% block content %}
+   {% block header %} <h1>{{ page_title }}</h1>{% endblock header %}
+    <p>
+        {{ publisher.name }}
+    </p>
+    <p>
+        Created at: {{ publisher.created_at }}
+    </p>
+
+    <button>
+        <a href="{% url 'publisher_list' %}">View publishers</a>
+    </button>
+    {% if request.user.profile.type|lower == "reader" %}
+        <button>
+            <a href="{% url 'shop_update' pk=shop.pk %}">Update publisher</a>
+        </button>
+
+        <button>
+            <a href="{% url 'shop_delete' pk=shop.pk %}">Delete publisher</a>
+        </button>
+    {% endif %}
+    <button>
+        <a href="{% url 'shop_list' %}">Back to Publisher List</a>
+    </button>
+    
+{% endblock %}

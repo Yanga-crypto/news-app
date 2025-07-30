@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+   Subscribed Journalist
+{% endblock %}
+
+{% block header %} Subscribed Journalist {% endblock header %}
+
+{% block content %}
+{% for journalist in journalists %}
+    <ul>
+        <li>{{ journalist.username }}</li>
+    </ul>
+{% endfor %}
+
+{% endblock content %}

@@ -1,0 +1,4 @@
+- note that I am not using signals to send emails or twitter posts and am instead managing article and newsletter approval without it.
+- The task does not require planning to be uploaded and it was done on paper.
+- The task does not specify that the publisher is a person and instead I created a model as indicated by the task to represent an entity to be the publisher.
+- For the twitter api the following environmental variables needs to be set BEARER_TOKEN, ACCESS_KEY, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET

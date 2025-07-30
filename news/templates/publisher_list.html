@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% extends 'base.html' %}
+{% extends 'base.html' %}
+{% block title %}
+    News - {{ page_title }}
+{% endblock %}
+{% block header %} <h1>{{ page_title }}</h1>{% endblock header %}
+{% block content %}
+    
+    <ul>
+        {% if request.user.profile.type|lower == "reader" %}
+            <button>
+                <a href="{% url 'publisher_create' %}">Add publisher</a>
+            </button>
+        {% endif %}
+        {% for publisher in publisher %}
+            <li>
+                <a href="{% url 'publisher_detail' %}">{{ publisher.name}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

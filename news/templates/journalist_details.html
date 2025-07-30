@@ -1,0 +1,21 @@
+<!-- shops/templates/shops/shop_list.html -->
+{% extends 'base.html' %}
+{% block title %}
+    News - {{ page_title }}
+{% endblock %}
+{% block header %} <h1>{{ page_title }}</h1>{% endblock header %}
+{% block content %}
+    
+    <ul>
+        {% if request.user.profile.type|lower == "journalist" %}
+            <button>
+                <a href="{% url 'journalist_create' %}">Add Journalist</a>
+            </button>
+        {% endif %}
+        {% for journalist in journalists %}
+            <li>
+                <a href="{% url 'journalist_detail' pk=shop.pk %}">{{ journalist.name}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

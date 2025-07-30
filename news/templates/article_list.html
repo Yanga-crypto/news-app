@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}
+    News - {{ page_title }}
+{% endblock %}
+{% block header %} <h1>{{ page_title }}</h1>{% endblock header %}
+{% block content %} 
+    <ul>
+        {% if request.user.profile.role|lower == "journalist" %}
+            <button>
+                <a href="{% url 'article_create' %}">Add an article</a>
+            </button>
+        {% endif %}
+        {% if articles %}
+        {% for article in articles %}
+            <li>
+                <a href="{% url 'article_detail' pk=article.id %}">{{ article.title}} - {% if article.is_approved %}approved{% else %}unapproved{% endif %}</a>
+            </li>
+        {% endfor %}
+        {% endif %}
+        
+    </ul>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>Editor dashboard</p>
+
+<h2>Unapproved Articles</h2>
+{% for article in  articles %} 
+<li>
+    <a href="{% url 'article_detail' pk=article.id %}">{{ article.title }} - {% if article.is_approved %}approved{% else %}unapproved{% endif %}</a>
+</li>
+{% endfor %}
+<h2>Unapproved Newsletters</h2>
+{%  for newsletter in newsletters %}
+<li>
+    <a href="{% url 'newsletter_detail' pk=newsletter.id %}">{{ newsletter.title }} - {% if newsletter.is_approved %}approved{% else %}unapproved{% endif %}</a>
+</li>
+{% endfor %}
+
+<button>
+    <a href="{% url 'profile_update' %}">Join publisher</a>
+</button>
+
+<button>
+    <a href="{% url 'newsletter_list' %}">View all newsletters</a>
+</button>
+<button>
+    <a href="{% url 'article_list' %}">View all articles</a>
+</button>
+
+{% endblock content %}

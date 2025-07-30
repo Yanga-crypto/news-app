@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>Reader dashboard</p>
+
+{% if request.user.profile.role|lower == "reader" %}
+<h2>Approved articles</h2>
+{% for article in  articles %} 
+<li>
+    <a href="{% url 'article_detail' pk=article.id %}">{{ article.title }} - {% if article.is_approved %}approved{% else %}unapproved{% endif %}</a>
+</li>
+{% endfor %}
+
+<h2>Aapproved Newsletters</h2>
+{%  for newsletter in newsletters %}
+<li>
+    <a href="{% url 'newsletter_detail' pk=newsletter.id %}">{{ newsletter.title }} - {% if newsletter.is_approved %}approved{% else %}unapproved{% endif %}</a>
+</li>
+{% endfor %}
+
+{% comment %} ManyToMany query's and how use mantomany lookups both for retreival and adding new {% endcomment %}
+<button>
+    <a href="{% url 'sub_publishers' %}">View subscription publishers</a>
+</button>
+
+<button>
+    <a href="{% url 'sub_journalists' %}">View subscription journalists </a>
+</button>
+{% endif %}
+{% endblock content %}

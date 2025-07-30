@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+   Subscribed Publishers
+{% endblock %}
+
+{% block header %} Subscribed Publishers {% endblock header %}
+
+{% block content %}
+{% for publisher in publishers %}
+    <ul>
+        <li>{{ publisher.name }}</li>
+    </ul>
+{% endfor %}
+
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} HOME PAGE {% endblock title %}
+{% block header %} <h1> WELCOME TO OUR HOME PAGE </h1>{% endblock header %}
+
+{% block content %} 
+<p>This our news app where you get headlining stories</p>
+{% if user.is_authenticated %}
+  {% if user.profile.role == "reader" %}
+    {% comment %} Add anchor tag to reader dashboard {% endcomment %}
+    <p>User is a reader</p>
+    <button>
+      <a href="{% url 'reader_dashboard' %}">View Dashboard</a>
+    </button>
+    {% elif user.profile.role == "journalist" %}
+    {% comment %} Add anchor tag to journalist dashboard {% endcomment %}
+    <p>User is a journalist</p>
+    <button>
+      <a href="{% url 'journalist_dashboard' %}">View Dashboard</a>
+    </button>
+    {% elif user.profile.role == "editor" %}
+    {% comment %} Add anchor tag to editor dashboard {% endcomment %}
+    <p>User is editor</p>
+    <button>
+      <a href="{% url 'editor_dashboard' %}">View Dashboard</a>
+    </button>
+  {% endif %}
+
+{% endif %}
+<h2>About</h2>
+
+{% endblock content %}
+    

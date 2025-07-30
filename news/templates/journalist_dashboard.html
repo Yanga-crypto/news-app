@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>Journalist dashboard</p>
+<button>
+    <a href="{% url 'profile_update' %}">Join publisher</a>
+</button>
+{% if request.user.profile.role|lower == "journalist" %}
+            <button>
+                <a href="{% url 'article_create' %}">Add an article</a>
+            </button>
+{% endif %}
+
+{% if request.user.profile.role|lower == "journalist" %}
+            <button>
+                <a href="{% url 'newsletter_create' %}">Add a newsletter</a>
+            </button>
+{% endif %}
+
+<button>
+    <a href="{% url 'article_list' %}">View all article</a>
+</button>
+
+<button>
+    <a href="{% url 'newsletter_list' %}">View all newsletter</a>
+</button>
+
+<h2>Your Articles</h2>
+{% if articles %}
+{% for article in articles %}
+    <li>
+        <a href="{% url 'journalist_dashboard' %}">{{article.title}}</a>
+        <p>
+            {{ journalist.content }}
+        </p>
+    </li>
+{% endfor %}
+{% else %}
+<p> There are no articles found</p>
+{% endif %}
+
+<h2>Your Newsletters</h2>
+{% if newsletter %}
+{% for newsletter in newsletter %}
+    <li>
+        <a href="{% url 'journalist_dashboard' %}">{{newsletter.title}}</a>
+        <p>
+            {{ journalist.content }}
+        </p>
+    </li>
+{% endfor %}
+{% else %}
+<p> There are no newsletter found</p>
+{% endif %} 
+{% endblock content %}

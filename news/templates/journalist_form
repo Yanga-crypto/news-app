@@ -1,0 +1,37 @@
+<!-- journalist/templates/journalist/journalist_form.html -->
+{% extends 'base.html' %}
+{% block title %}
+    news -
+    {% if form.instance.pk %}
+        Edit
+    {% else %}
+        Create
+    {% endif %}
+    Shop
+{% endblock %}
+{% block content %}
+    <h2>
+        {% if form.instance.pk %}
+            Edit
+        {% else %}
+            Create
+        {% endif %}
+        Journalist
+    </h2>
+    <form method="post"
+            action="{% if form.instance.pk %}
+                        {% url 'journalist_update' pk=form.instance.pk %}
+                    {% else %}
+                        {% url 'journalist_create' %}
+                    {% endif %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+        <button type="submit">
+            Save
+        </button>
+    </form>
+
+    <button>
+        <a href="{% url 'journalist_list' %}">Back Journalist List</a>
+    </button>
+{% endblock %}
