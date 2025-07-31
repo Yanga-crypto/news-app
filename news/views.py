@@ -13,12 +13,14 @@ from .tweeter import send_new_tweet
 
 @login_required
 def home(request):
+    """Render a home page"""
     return render(request, 'home.html')
 
 
 # create a test_dashboard
 @login_required
 def journalist_dashboard(request):
+    """Renders a specific dashboard for a journilist to interact with"""
     articles = Article.objects.filter(journalist=request.user)
     newsletters = Newsletter.objects.filter(writer=request.user)
     print(articles)
@@ -33,6 +35,7 @@ def journalist_dashboard(request):
 # Create editor dashboard
 @login_required
 def editor_dashboard(request):
+    """Renders a specific dashboard for a editor to interact with"""
     articles = Article.objects.filter(is_approved=False)
     newsletters = Newsletter.objects.filter(is_approved=False)
 
@@ -47,6 +50,9 @@ def editor_dashboard(request):
 
 @login_required
 def approve_article(request, pk):
+    """Approves articles, sends an email to subscribed users
+        and it makes a post to twitter.
+    """
     if request.user.profile.role.lower() == "editor":
         article = get_object_or_404(Article, pk=pk)
 
@@ -333,6 +339,7 @@ def editor_delete_newsletter(request):
 # Create a reader dashboard
 @login_required
 def reader_dashboard(request):
+    """Renders a specific dashboard for a reader to interact with"""
     articles = Article.objects.filter(is_approved=True)
     newsletters = Newsletter.objects.filter(is_approved=True)
     context = {
