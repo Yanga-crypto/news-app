@@ -7,9 +7,14 @@ My project provides readers with access to news articles authored by independent
 ## INSTALLATION & SETUP
 
 ### Cloning the repository
-1. Clone the repository
+1. Clone the repository with HTTPS
     ```bash
-    git clone repository-url
+    git clone https://github.com/Yanga-crypto/news-app.git
+    ```
+
+    Clone the repository with SSH
+    ```bash
+    git clone git@github.com:Yanga-crypto/news-app.git
     ```
 2. Navigate into project repository
     ```bash
